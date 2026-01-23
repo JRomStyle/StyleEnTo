@@ -70,10 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-white text-black">
   <main class="min-h-screen grid place-items-center px-5 py-12">
     <div class="w-full max-w-md border border-black/10 rounded-[2.5rem] p-8 bg-white shadow-2xl">
-      <a href="<?= e(url('index.php')) ?>" class="font-extrabold tracking-tight text-lg">
+      <a href="<?= e(url('index.php')) ?>" class="font-extrabold tracking-tight text-lg text-black">
         style <span class="text-accent">en</span> to<span class="text-danger">!</span>
       </a>
-      <h1 class="mt-6 text-3xl font-extrabold tracking-tight">Iniciar sesión</h1>
+      <h1 class="mt-6 text-3xl font-extrabold tracking-tight text-black">Iniciar sesión</h1>
       <p class="mt-2 text-black/60">Accede para administrar y finalizar compras.</p>
 
       <?php if ($error !== ''): ?>
@@ -85,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="hidden" name="next" value="<?= e($next) ?>" />
 
         <div>
-          <label class="text-sm font-semibold">Email</label>
-          <input name="email" type="email" class="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3 outline-none focus:border-black/30" placeholder="admin@styleento.local" required />
+          <label class="text-sm font-semibold text-black">Email</label>
+          <input name="email" type="email" class="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3 outline-none focus:border-black/30 text-black" placeholder="admin@styleento.local" required />
         </div>
         <div>
-          <label class="text-sm font-semibold">Contraseña</label>
-          <input name="password" type="password" class="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3 outline-none focus:border-black/30" placeholder="••••••••" required />
+          <label class="text-sm font-semibold text-black">Contraseña</label>
+          <input name="password" type="password" class="mt-2 w-full rounded-2xl border border-black/10 px-4 py-3 outline-none focus:border-black/30 text-black" placeholder="••••••••" required />
         </div>
 
         <button class="mt-2 px-7 py-3 rounded-full btn-primary font-semibold" type="submit">Entrar</button>

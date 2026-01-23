@@ -118,7 +118,7 @@ $user = current_user();
       <div>
         <div class="font-semibold">Contacto</div>
         <div class="mt-3 text-sm text-white/70">
-          <div>contacto@styleento.com</div>
+          <div>admin@styleento.com</div>
           <div class="mt-1">+57 321 550 1870</div>
           <div class="mt-1">Ciudad Manizales</div>
         </div>
