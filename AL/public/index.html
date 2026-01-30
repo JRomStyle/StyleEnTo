@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicFlow - Plataforma de Distribución Musical</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1DB954', // Verde Spotify
+                        secondary: '#2C3E50', // Azul oscuro
+                        dark: '#121212', // Fondo Spotify
+                        'dark-secondary': '#181818',
+                        'dark-tertiary': '#282828'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Montserrat', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Estilos personalizados -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-white dark:bg-dark text-gray-900 dark:text-white transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 dark:bg-dark/90 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <i class="fas fa-music text-primary text-2xl"></i>
+                <span class="text-xl font-bold font-display">Artist's Life</span>
+            </a>
+            
+            <!-- Menú de navegación -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="font-medium hover:text-primary transition-colors">Home</a>
+                <a href="#discover" class="font-medium hover:text-primary transition-colors">Descubrir</a>
+                <a href="#marketplace" class="font-medium hover:text-primary transition-colors">Marketplace</a>
+                <a href="#distribution" class="font-medium hover:text-primary transition-colors">Distribución</a>
+                <a href="#community" class="font-medium hover:text-primary transition-colors">Comunidad</a>
+            </div>
+            
+            <!-- Acciones -->
+            <div class="flex items-center space-x-4">
+                <!-- Toggle dark mode -->
+                <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <i class="fas fa-moon dark:hidden text-xl"></i>
+                    <i class="fas fa-sun hidden dark:block text-xl"></i>
+                </button>
+                
+                <!-- Botones de autenticación -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="#login" class="px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-all">Iniciar Sesión</a>
+                    <a href="#register" class="px-4 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-all">Registrarse</a>
+                </div>
+                
+                <!-- Menú móvil -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menú móvil -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-dark border-t border-gray-200 dark:border-gray-800">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-3">
+                <a href="#" class="font-medium py-2 hover:text-primary transition-colors">Home</a>
+                <a href="#discover" class="font-medium py-2 hover:text-primary transition-colors">Descubrir</a>
+                <a href="#marketplace" class="font-medium py-2 hover:text-primary transition-colors">Marketplace</a>
+                <a href="#distribution" class="font-medium py-2 hover:text-primary transition-colors">Distribución</a>
+                <a href="#community" class="font-medium py-2 hover:text-primary transition-colors">Comunidad</a>
+                <div class="flex flex-col space-y-3 pt-4 border-t border-gray-200 dark:border-gray-800">
+                    <a href="#login" class="px-4 py-2 rounded-full border border-primary text-primary text-center hover:bg-primary/10 transition-all">Iniciar Sesión</a>
+                    <a href="#register" class="px-4 py-2 rounded-full bg-primary text-white text-center hover:bg-primary/90 transition-all">Registrarse</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-28 pb-16 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold font-display leading-tight mb-6">
+                        <span class="text-primary">Distribuye</span> tu música,
+                        <br>
+                        <span class="text-primary">monetiza</span> tu arte,
+                        <br>
+                        <span class="text-primary">conecta</span> con el mundo
+                    </h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                        Plataforma global de distribución musical para artistas independientes. 
+                        Distribuye tu música a todas las plataformas digitales, vende beats y servicios,
+                        y gestiona tu carrera musical desde un solo lugar.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#register" class="px-8 py-3 rounded-full bg-primary text-white text-lg font-medium hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl">
+                            Empezar Gratis
+                        </a>
+                        <a href="#demo" class="px-8 py-3 rounded-full border-2 border-primary text-primary text-lg font-medium hover:bg-primary/10 transition-all">
+                            Ver Demo
+                        </a>
+                    </div>
+                    <!-- Logos de plataformas -->
+                    <div class="mt-12">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Distribuimos a las principales plataformas:</p>
+                        <div class="flex flex-wrap items-center gap-6 opacity-70">
+                            <i class="fab fa-spotify text-3xl"></i>
+                            <i class="fab fa-apple text-3xl"></i>
+                            <i class="fab fa-youtube text-3xl"></i>
+                            <i class="fab fa-deezer text-3xl"></i>
+                            <i class="fab fa-amazon text-3xl"></i>
+                            <i class="fab fa-itunes text-3xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-500/20 rounded-full blur-3xl -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Artista musical" class="rounded-2xl shadow-2xl w-full object-cover aspect-square">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="py-16 px-4 bg-gray-50 dark:bg-dark-secondary">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display mb-4">Todo lo que necesitas para tu carrera musical</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Herramientas poderosas diseñadas para artistas independientes, productores y compositores.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all">
+                    <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-globe text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display mb-3">Distribución Global</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Distribuye tu música a Spotify, Apple Music, YouTube Music, Deezer y más de 150 plataformas digitales.
+                    </p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all">
+                    <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-dollar-sign text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display mb-3">Monetización</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Gana dinero con tus canciones, beats y servicios. Reparto automático de regalías y pagos mensuales.
+                    </p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all">
+                    <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-shopping-cart text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display mb-3">Marketplace Creativo</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Vende y compra beats, letras, hooks y servicios musicales con licencias y contratos digitales.
+                    </p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all">
+                    <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display mb-3">Red Social para Artistas</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Conecta con artistas de todo el mundo, comparte tu música y colabora en proyectos.
+                    </p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all">
+                    <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display mb-3">Estadísticas Detalladas</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Analiza el rendimiento de tu música, audiencia y ingresos con dashboards intuitivos.
+                    </p>
+                </div>
+                <!-- Feature 6 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl p-8 shadow-lg hover:shadow-xl transition-all">
+                    <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display mb-3">Seguridad y Control</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Protege tus derechos de autor y controla cómo se usa tu música con licencias personalizadas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Marketplace Section -->
+    <section id="marketplace" class="py-16 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+                <div>
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display mb-4">Marketplace Creativo</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-300">
+                        Explora y compra beats, letras y servicios musicales de artistas de todo el mundo.
+                    </p>
+                </div>
+                <a href="#" class="mt-6 md:mt-0 px-6 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary/10 transition-all">
+                    Ver Todo <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Cards de marketplace -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Beat" class="w-full aspect-video object-cover">
+                        <div class="absolute top-4 right-4 bg-primary text-white text-sm font-medium px-3 py-1 rounded-full">
+                            Instrumental
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold font-display">Summer Vibes</h3>
+                            <span class="text-primary font-bold">$49.99</span>
+                        </div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <img src="https://i.pravatar.cc/40" alt="Productor" class="w-10 h-10 rounded-full object-cover">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">@producer123</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">Hip Hop</span>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">R&B</span>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">2024</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="flex-1 px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors">
+                                Comprar
+                            </button>
+                            <button class="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Letra" class="w-full aspect-video object-cover">
+                        <div class="absolute top-4 right-4 bg-purple-500 text-white text-sm font-medium px-3 py-1 rounded-full">
+                            Letra
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold font-display">Midnight Dreams</h3>
+                            <span class="text-primary font-bold">$29.99</span>
+                        </div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <img src="https://i.pravatar.cc/40?img=2" alt="Compositor" class="w-10 h-10 rounded-full object-cover">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">@composer456</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">Pop</span>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">Ballad</span>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">2024</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="flex-1 px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors">
+                                Comprar
+                            </button>
+                            <button class="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white dark:bg-dark-tertiary rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Servicio" class="w-full aspect-video object-cover">
+                        <div class="absolute top-4 right-4 bg-blue-500 text-white text-sm font-medium px-3 py-1 rounded-full">
+                            Servicio
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold font-display">Mastering Profesional</h3>
+                            <span class="text-primary font-bold">$79.99</span>
+                        </div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <img src="https://i.pravatar.cc/40?img=3" alt="Ingeniero" class="w-10 h-10 rounded-full object-cover">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">@engineer789</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">Mixing</span>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">Mastering</span>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">24h</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="flex-1 px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors">
+                                Contratar
+                            </button>
+                            <button class="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo y descripción -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-music text-primary text-2xl"></i>
+                        <span class="text-xl font-bold font-display">MusicFlow</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Plataforma global de distribución musical para artistas independientes.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-spotify"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Enlaces rápidos -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#discover" class="text-gray-400 hover:text-primary transition-colors">Descubrir</a></li>
+                        <li><a href="#marketplace" class="text-gray-400 hover:text-primary transition-colors">Marketplace</a></li>
+                        <li><a href="#distribution" class="text-gray-400 hover:text-primary transition-colors">Distribución</a></li>
+                        <li><a href="#community" class="text-gray-400 hover:text-primary transition-colors">Comunidad</a></li>
+                    </ul>
+                </div>
+                <!-- Recursos -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Recursos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Documentación</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Tutoriales</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Soporte</a></li>
+                    </ul>
+                </div>
+                <!-- Contacto -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center space-x-2 text-gray-400">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@musicflow.com</span>
+                        </li>
+                        <li class="flex items-center space-x-2 text-gray-400">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center space-x-2 text-gray-400">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>New York, NY</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2024 MusicFlow. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script>
+        // Toggle dark mode
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+        
+        // Verificar preferencia guardada
+        if (localStorage.getItem('darkMode') === 'true' || 
+            (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+        
+        darkModeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('darkMode', html.classList.contains('dark'));
+        });
+        
+        // Toggle mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cerrar menú móvil al hacer clic en un enlace
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
